@@ -1,0 +1,18 @@
+.header {
+  background-color: $bg;
+  left: 0;
+  padding: 20px 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+
+  .title {
+    color: $black;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin: 0;
+    text-align: center;
+    text-transform: uppercase;
+  }
+}

@@ -1,0 +1,55 @@
+.filters {
+  background-color: $white;
+  border-top: 1px solid $black;
+  border-bottom: 1px solid $black;
+  padding: 5px;
+
+  .header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+
+    &__title {
+      color: $black;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    &__icon {
+      width: 18px;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .form {
+    margin-top: 20px;
+
+    &__field {
+      display: flex;
+      flex-flow: column;
+      margin-bottom: 15px;
+      width: 70%;
+    }
+
+    .field {
+      &__label {
+        margin-bottom: 5px;
+        font-size: 15px;
+      }
+
+      &__input {
+        padding: 5px;
+        outline: none;
+      }
+
+      &__select {
+        padding: 5px;
+        outline: none;
+      }
+    }
+  }
+}
