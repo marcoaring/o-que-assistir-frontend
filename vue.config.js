@@ -7,4 +7,13 @@ module.exports = {
       return args;
     });
   },
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData: `
+          @import "@/styles/_variables.scss";
+        `,
+      },
+    },
+  },
 };
