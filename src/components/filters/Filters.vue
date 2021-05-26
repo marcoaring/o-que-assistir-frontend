@@ -3,7 +3,11 @@
     <section class="main">
       <div class="filters__header header" v-on:click="toggleFilters">
         <span class="header__title">Filtros:</span>
-        <img alt="Ícone de Filtragem" class="header__icon" src="../../assets/icon-filter.svg" />
+        <img
+          alt="Ícone de Filtragem"
+          class="header__icon"
+          src="../../assets/icon-filter.svg"
+        />
       </div>
       <form class="form" v-if="showFilters">
         <div class="form__field field">
@@ -24,8 +28,10 @@
               :selected="year.selected"
               :value="year.value"
               v-for="year in yearsOptions"
-              >{{ year.label }}</option
             >
+              {{ year.label }}
+              >
+            </option>
           </select>
         </div>
       </form>
@@ -35,20 +41,20 @@
 
 <script>
 export default {
-  name: 'Filters',
+  name: "Filters",
   // props: {
   //   msg: String,
   // },
   data() {
     return {
-      author: '',
-      year: '',
+      author: "",
+      year: "",
       showFilters: false,
       yearsOptions: [
         {
-          label: 'Escolha o ano de lançamento',
+          label: "Escolha o ano de lançamento",
           selected: true,
-          value: '',
+          value: "",
         },
       ],
     };
@@ -78,5 +84,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import './Filters.scss';
+@import "./Filters.scss";
 </style>

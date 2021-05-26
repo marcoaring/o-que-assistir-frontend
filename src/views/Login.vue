@@ -7,7 +7,11 @@
       <input v-model="login" type="text" placeholder="Digite seu e-mail" />
 
       <label>Senha</label>
-      <input v-model="password" type="password" placeholder="Digite sua senha" />
+      <input
+        v-model="password"
+        type="password"
+        placeholder="Digite sua senha"
+      />
 
       <button type="submit">Logar!</button>
     </form>
@@ -15,10 +19,10 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
-  name: 'Login',
+  name: "Login",
   data() {
     return {
       login: null,
@@ -28,7 +32,7 @@ export default {
   methods: {
     async submitForm(e) {
       e.preventDefault();
-      const url = 'http://localhost:3000/api/authenticate';
+      const url = "http://localhost:3000/api/authenticate";
 
       const result = (
         await axios.post(url, {
@@ -38,7 +42,7 @@ export default {
       ).data;
 
       localStorage.token = result.token;
-      this.$router.push('/');
+      this.$router.push("/");
     },
   },
 };

@@ -6,10 +6,10 @@
 
 <script>
 export default {
-  name: 'Header',
+  name: "Header",
 };
 </script>
 
 <style scoped lang="scss">
-@import './Header.scss';
+@import "./Header.scss";
 </style>
