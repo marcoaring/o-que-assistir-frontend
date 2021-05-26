@@ -7,19 +7,19 @@
 </template>
 
 <style lang="scss">
-body {
-  background-color: rgb(225, 225, 225);
-  margin: 0;
-}
+// body {
+//   background-color: rgb(225, 225, 225);
+//   margin: 0;
+// }
 
-#app {
-  font-family: Roboto, sans-serif;
-  padding-top: 62px;
+// #app {
+//   font-family: Roboto, sans-serif;
+//   padding-top: 62px;
 
-  .main {
-    margin: 0 auto;
-    max-width: 800px;
-    width: 100%;
-  }
-}
+//   .main {
+//     margin: 0 auto;
+//     max-width: 800px;
+//     width: 100%;
+//   }
+// }
 </style>

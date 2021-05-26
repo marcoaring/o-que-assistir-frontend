@@ -2,18 +2,33 @@
   <div class="login">
     <h1 class="login__title">O que assistir?</h1>
 
-    <form @submit="submitForm">
-      <label>Login</label>
-      <input v-model="login" type="text" placeholder="Digite seu e-mail" />
+    <form novalidate class="md-layout" @submit.prevent="submitForm">
+      <md-card class="md-layout-item md-size-50 md-small-size-100">
+        <md-card-header>
+          <div class="md-title">Users</div>
+        </md-card-header>
 
-      <label>Senha</label>
-      <input
-        v-model="password"
-        type="password"
-        placeholder="Digite sua senha"
-      />
+        <md-card-content>
+          <md-field>
+            <label for="login">Email</label>
+            <md-input type="email" name="login" id="login" v-model="login" />
+          </md-field>
 
-      <button type="submit">Logar!</button>
+          <md-field>
+            <label for="password">Senha</label>
+            <md-input
+              type="password"
+              name="password"
+              id="password"
+              v-model="password"
+            />
+          </md-field>
+        </md-card-content>
+
+        <md-card-actions>
+          <md-button type="submit" class="md-primary">Logar</md-button>
+        </md-card-actions>
+      </md-card>
     </form>
   </div>
 </template>
