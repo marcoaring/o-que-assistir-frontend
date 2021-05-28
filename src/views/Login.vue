@@ -1,63 +1,92 @@
 <template>
-  <div class="login">
-    <h1 class="login__title">O que assistir?</h1>
+  <v-container class="grey lighten-4" fluid fill-height>
+    <v-row class="align-center justify-center" no-gutters>
+      <v-col align-self="center" xs="12" sm="7" md="5" lg="3">
+        <v-card class="pa-8 pt-3" outlined tile>
+          <h1 class="text-uppercase text-center mb-8">O que assistir?</h1>
 
-    <form novalidate class="md-layout" @submit.prevent="submitForm">
-      <md-card class="md-layout-item md-size-50 md-small-size-100">
-        <md-card-header>
-          <div class="md-title">Users</div>
-        </md-card-header>
+          <form @submit.prevent="submitForm">
+            <v-text-field
+              v-model="email"
+              :rules="emailRules"
+              label="E-mail"
+              color="cyan darken-1"
+              required
+            ></v-text-field>
 
-        <md-card-content>
-          <md-field>
-            <label for="login">Email</label>
-            <md-input type="email" name="login" id="login" v-model="login" />
-          </md-field>
-
-          <md-field>
-            <label for="password">Senha</label>
-            <md-input
-              type="password"
-              name="password"
-              id="password"
+            <v-text-field
               v-model="password"
-            />
-          </md-field>
-        </md-card-content>
+              :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+              :rules="passwordRules"
+              :type="show1 ? 'text' : 'password'"
+              class="mb-4"
+              label="Senha"
+              color="cyan darken-1"
+              @click:append="show1 = !show1"
+            ></v-text-field>
 
-        <md-card-actions>
-          <md-button type="submit" class="md-primary">Logar</md-button>
-        </md-card-actions>
-      </md-card>
-    </form>
-  </div>
+            <v-alert dense outlined type="error" v-if="error">
+              {{ error }}
+            </v-alert>
+
+            <v-btn
+              :disabled="$v.$invalid"
+              block
+              color="cyan accent-4"
+              type="submit"
+              >Logar</v-btn
+            >
+          </form>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 import axios from "axios";
+import { validationMixin } from "vuelidate";
+import { required, email } from "vuelidate/lib/validators";
 
 export default {
   name: "Login",
-  data() {
-    return {
-      login: null,
-      password: null,
-    };
+  mixins: [validationMixin],
+  validations: {
+    password: { required },
+    email: { required, email },
   },
+  data: () => ({
+    show1: false,
+    email: "",
+    password: "",
+    error: "",
+    emailRules: [
+      (v) => !!v || "O e-mail é obrigatório.",
+      (v) => /.+@.+/.test(v) || "O e-mail precisa ser válido.",
+    ],
+    passwordRules: [
+      (v) => !!v || "A senha é obrigatória.",
+      // (v) => v.length >= 8 || "Min 8 characters",
+      // emailMatch: () => `The email and password you entered don't match`,
+    ],
+  }),
   methods: {
-    async submitForm(e) {
-      e.preventDefault();
-      const url = "http://localhost:3000/api/authenticate";
+    async submitForm() {
+      try {
+        const url = "http://localhost:3000/api/authenticate";
 
-      const result = (
-        await axios.post(url, {
-          email: this.login,
-          password: this.password,
-        })
-      ).data;
+        const result = (
+          await axios.post(url, {
+            email: this.email,
+            password: this.password,
+          })
+        ).data;
 
-      localStorage.token = result.token;
-      this.$router.push("/");
+        localStorage.token = result.token;
+        this.$router.push("/");
+      } catch (error) {
+        this.error = error.response.data.error;
+      }
     },
   },
 };
