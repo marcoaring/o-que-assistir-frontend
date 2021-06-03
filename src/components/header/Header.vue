@@ -10,7 +10,7 @@
       </v-btn>
     </v-toolbar>
 
-    <Filters v-show="showFilters" />
+    <Filters v-show="showFilters" :toggleFilters="toggleFilters" />
   </div>
 </template>
 
