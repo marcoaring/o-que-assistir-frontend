@@ -145,9 +145,6 @@ export default {
           params: {
             actor: val,
           },
-          headers: {
-            Authorization: `Bearer ${localStorage.token}`,
-          },
         })
         .then((res) => {
           const { actors } = res.data;

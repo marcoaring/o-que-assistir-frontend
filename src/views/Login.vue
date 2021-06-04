@@ -80,7 +80,7 @@ export default {
           })
         ).data;
 
-        localStorage.token = result.token;
+        this.$store.commit("setToken", result.token);
         this.$router.push("/");
       } catch (error) {
         this.error = error.response.data.error;

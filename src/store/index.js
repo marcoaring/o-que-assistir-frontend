@@ -11,6 +11,7 @@ export default new Vuex.Store({
     movies: [],
     showFilters: false,
     streamings: [],
+    token: "",
   },
   mutations: {
     searchMovie(state, params) {
@@ -18,9 +19,6 @@ export default new Vuex.Store({
       axios
         .get(`${process.env.VUE_APP_API_URL}search/movie`, {
           params,
-          headers: {
-            Authorization: `Bearer ${localStorage.token}`,
-          },
         })
         .then((res) => {
           state.movies = res.data.movies;
@@ -35,6 +33,9 @@ export default new Vuex.Store({
     setStreamings(state, streamings) {
       state.streamings = streamings;
     },
+    setToken(state, token) {
+      state.token = token;
+    },
     toggleFilters(state) {
       state.showFilters = !state.showFilters;
     },
@@ -44,23 +45,13 @@ export default new Vuex.Store({
   },
   actions: {
     getGenres({ commit }) {
-      axios
-        .get(`${process.env.VUE_APP_API_URL}films/genres`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.token}`,
-          },
-        })
-        .then((res) => {
-          commit("setGenres", res.data.genres);
-        });
+      axios.get(`${process.env.VUE_APP_API_URL}films/genres`).then((res) => {
+        commit("setGenres", res.data.genres);
+      });
     },
     getStreamings({ commit }) {
       axios
-        .get(`${process.env.VUE_APP_API_URL}films/streamings`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.token}`,
-          },
-        })
+        .get(`${process.env.VUE_APP_API_URL}films/streamings`)
         .then((res) => {
           commit("setStreamings", res.data.streamings);
         });
