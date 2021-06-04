@@ -5,14 +5,14 @@
         :disable-lookup="loadingActor"
         :items="actors"
         :loading="loadingActor"
-        :search-input.sync="search"
+        :search-input.sync="searchActor"
         color="cyan darken-1"
         item-text="name"
         item-value="id"
         label="Ator ou Atriz:"
         no-data-text="Sem atores ou atrizes encontrados"
         placeholder="Começe a digitar para procurar"
-        v-model="actor"
+        v-model="params.actors"
       ></v-autocomplete>
 
       <v-select
@@ -22,23 +22,21 @@
         item-value="value"
         label="Ano:"
         placeholder="Escolha o ano de lançamento"
-        v-model="year"
+        v-model="params.year"
       ></v-select>
 
       <v-select
-        :items="genres"
-        :loading="loadingGenres"
+        :items="this.$store.state.genres"
         color="cyan darken-1"
         item-text="name"
         item-value="id"
         label="Gênero:"
         placeholder="Escolha o gênero"
-        v-model="genre"
+        v-model="params.genres"
       ></v-select>
 
       <v-autocomplete
-        :disable-lookup="loadingStreamings"
-        :items="streamings"
+        :items="this.$store.state.streamings"
         chips
         color="cyan darken-1"
         item-text="name"
@@ -46,7 +44,7 @@
         label="Streaming:"
         multiple
         placeholder="Escolha o streaming"
-        v-model="streaming"
+        v-model="params.streamings"
       >
         <template v-slot:selection="data">
           <v-chip
@@ -88,63 +86,19 @@ export default {
   name: "Filters",
   data() {
     return {
-      actor: null,
+      params: {
+        actors: null,
+        year: null,
+        genres: null,
+        streamings: null,
+      },
       actors: [],
-      genre: null,
-      genres: [],
       loadingActor: false,
-      loadingGenres: true,
-      loadingStreamings: true,
-      search: null,
-      streaming: null,
-      streamings: [],
-      year: null,
+      searchActor: null,
       yearsOptions: [],
     };
   },
   methods: {
-    getGenres() {
-      const url = "http://localhost:3000/api/films/genres";
-
-      axios
-        .get(url, {
-          headers: {
-            Authorization: `Bearer ${localStorage.token}`,
-          },
-        })
-        .then((res) => {
-          const { genres } = res.data;
-          this.genres = genres;
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          this.loadingGenres = false;
-        });
-    },
-
-    getStreamings() {
-      const url = "http://localhost:3000/api/films/streamings";
-
-      axios
-        .get(url, {
-          headers: {
-            Authorization: `Bearer ${localStorage.token}`,
-          },
-        })
-        .then((res) => {
-          const { streamings } = res.data;
-          this.streamings = streamings;
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          this.loadingStreamings = false;
-        });
-    },
-
     generateYears() {
       const firstYear = 1885;
       let currentYear = new Date().getFullYear();
@@ -160,25 +114,26 @@ export default {
     },
 
     remove(item) {
-      const index = this.streaming.indexOf(item.id);
-      if (index >= 0) this.streaming.splice(index, 1);
+      const index = this.params.streamings.indexOf(item.id);
+      if (index >= 0) this.params.streamings.splice(index, 1);
     },
 
     async submitFilters() {
+      this.params.streamings = this.params.streamings
+        ? this.params.streamings.toString()
+        : this.params.streamings;
+
       this.$store.commit("toggleFilters");
-      console.log("Ator ou Atriz -> ", this.actor);
-      console.log("Ano -> ", this.year);
-      console.log("Gênero -> ", this.genre);
-      console.log("Streaming -> ", this.streaming.toString());
+      this.$store.commit("searchMovie", this.params);
     },
   },
   beforeMount() {
     this.generateYears();
-    this.getGenres();
-    this.getStreamings();
+    this.$store.dispatch("getGenres");
+    this.$store.dispatch("getStreamings");
   },
   watch: {
-    search(val) {
+    searchActor(val) {
       if (this.loadingActor) return;
 
       if (val.length <= 3) return;
@@ -199,9 +154,6 @@ export default {
         .then((res) => {
           const { actors } = res.data;
           this.actors = actors;
-        })
-        .catch((err) => {
-          console.log(err);
         })
         .finally(() => {
           this.loadingActor = false;
