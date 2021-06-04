@@ -73,10 +73,8 @@ export default {
   methods: {
     async submitForm() {
       try {
-        const url = "http://localhost:3000/api/authenticate";
-
         const result = (
-          await axios.post(url, {
+          await axios.post(`${process.env.VUE_APP_API_URL}authenticate`, {
             email: this.email,
             password: this.password,
           })

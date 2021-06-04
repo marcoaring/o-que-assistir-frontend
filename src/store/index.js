@@ -16,7 +16,7 @@ export default new Vuex.Store({
     searchMovie(state, params) {
       state.loading = true;
       axios
-        .get("http://localhost:3000/api/search/movie", {
+        .get(`${process.env.VUE_APP_API_URL}search/movie`, {
           params,
           headers: {
             Authorization: `Bearer ${localStorage.token}`,
@@ -45,7 +45,7 @@ export default new Vuex.Store({
   actions: {
     getGenres({ commit }) {
       axios
-        .get("http://localhost:3000/api/films/genres", {
+        .get(`${process.env.VUE_APP_API_URL}films/genres`, {
           headers: {
             Authorization: `Bearer ${localStorage.token}`,
           },
@@ -56,7 +56,7 @@ export default new Vuex.Store({
     },
     getStreamings({ commit }) {
       axios
-        .get("http://localhost:3000/api/films/streamings", {
+        .get(`${process.env.VUE_APP_API_URL}films/streamings`, {
           headers: {
             Authorization: `Bearer ${localStorage.token}`,
           },

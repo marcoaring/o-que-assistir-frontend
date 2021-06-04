@@ -140,10 +140,8 @@ export default {
 
       this.loadingActor = true;
 
-      const url = "http://localhost:3000/api/search/actor";
-
       axios
-        .get(url, {
+        .get(`${process.env.VUE_APP_API_URL}search/actor`, {
           params: {
             actor: val,
           },
