@@ -10,7 +10,7 @@
       </v-btn>
     </v-toolbar>
 
-    <Filters v-show="showFilters" :toggleFilters="toggleFilters" />
+    <Filters v-show="this.$store.state.showFilters" />
   </div>
 </template>
 
@@ -22,14 +22,9 @@ export default {
   components: {
     Filters,
   },
-  data() {
-    return {
-      showFilters: false,
-    };
-  },
   methods: {
     toggleFilters() {
-      this.showFilters = !this.showFilters;
+      this.$store.commit("toggleFilters");
     },
   },
 };

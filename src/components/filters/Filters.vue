@@ -86,7 +86,6 @@ import axios from "axios";
 
 export default {
   name: "Filters",
-  props: ["toggleFilters"],
   data() {
     return {
       actor: null,
@@ -166,7 +165,7 @@ export default {
     },
 
     async submitFilters() {
-      this.toggleFilters();
+      this.$store.commit("toggleFilters");
       console.log("Ator ou Atriz -> ", this.actor);
       console.log("Ano -> ", this.year);
       console.log("Gênero -> ", this.genre);
