@@ -11,7 +11,7 @@ export default new Vuex.Store({
     movies: [],
     showFilters: false,
     streamings: [],
-    token: "",
+    token: localStorage.token || "",
   },
   mutations: {
     searchMovie(state, params) {
