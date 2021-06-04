@@ -39,9 +39,11 @@
         :items="this.$store.state.streamings"
         chips
         color="cyan darken-1"
+        hide-selected
         item-text="name"
         item-value="id"
         label="Streaming:"
+        menu-props="closeOnContentClick"
         multiple
         placeholder="Escolha o streaming"
         v-model="params.streamings"
