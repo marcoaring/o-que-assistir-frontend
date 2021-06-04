@@ -127,6 +127,13 @@ export default {
 
       this.$store.commit("toggleFilters");
       this.$store.commit("searchMovie", this.params);
+
+      this.params = {
+        actors: null,
+        year: null,
+        genres: null,
+        streamings: null,
+      };
     },
   },
   beforeMount() {
