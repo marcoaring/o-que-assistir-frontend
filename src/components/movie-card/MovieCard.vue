@@ -2,7 +2,10 @@
   <div class="px-4">
     <v-card class="ma-3 mt-8 mx-auto justify-center">
       <v-img
-        :src="this.$store.state.movies[0].background"
+        :src="
+          this.$store.state.movies[0].background ||
+          this.$store.state.movies[0].poster
+        "
         class="white--text align-end"
         gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.9)"
         height="275px"
