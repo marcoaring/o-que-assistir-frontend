@@ -7,12 +7,14 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     genres: [],
+    loading: false,
     movies: [],
     showFilters: false,
     streamings: [],
   },
   mutations: {
     searchMovie(state, params) {
+      state.loading = true;
       axios
         .get("http://localhost:3000/api/search/movie", {
           params,
@@ -22,6 +24,9 @@ export default new Vuex.Store({
         })
         .then((res) => {
           state.movies = res.data.movies;
+        })
+        .finally(() => {
+          state.loading = false;
         });
     },
     setGenres(state, genres) {
@@ -32,6 +37,9 @@ export default new Vuex.Store({
     },
     toggleFilters(state) {
       state.showFilters = !state.showFilters;
+    },
+    toggleLoading(state) {
+      state.loading = !state.loading;
     },
   },
   actions: {
