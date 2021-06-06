@@ -30,6 +30,7 @@
             </v-alert>
 
             <v-btn
+              :dark="!$v.$invalid"
               :disabled="$v.$invalid"
               block
               color="cyan accent-4"
