@@ -1,6 +1,18 @@
 <template>
-  <div class="px-4">
-    <v-card class="ma-3 mt-8 mx-auto justify-center">
+  <div class="card px-4 my-0 mx-auto">
+    <p
+      :class="this.$store.state.selectedYear ? 'mt-4' : ''"
+      v-if="this.$store.state.selectedYear"
+    >
+      O ano gerado foi <strong>{{ this.$store.state.selectedYear }}</strong
+      >.
+    </p>
+    <v-card
+      :class="[
+        this.$store.state.selectedYear ? '' : 'ma-3 mt-8',
+        'mx-auto justify-center',
+      ]"
+    >
       <v-img
         :src="
           this.$store.state.movies[0].background ||
